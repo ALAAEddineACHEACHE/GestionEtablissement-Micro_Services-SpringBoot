@@ -2,7 +2,9 @@
 A modern, scalable university management system built with microservices architecture.
 
 📊 System Architecture
-<img width="1732" height="869" alt="image" src="https://github.com/user-attachments/assets/362e3591-239c-42e6-b285-f6693e771911" />
+
+<img width="1527" height="875" alt="image" src="https://github.com/user-attachments/assets/49f4a7a8-ffa0-42e7-b27e-e23f15735e7b" />
+
 🚀 Features
 🎯 Core Functionality
 🔐 Role-Based Access Control (Admin, Teacher, Student)
