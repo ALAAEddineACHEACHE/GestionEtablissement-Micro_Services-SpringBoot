@@ -71,7 +71,7 @@ Keycloak Admin: http://localhost:8181
 
 Kafka : http://localhost:8086
 
-API Gateway: http://localhost:8765
+API Gateway: http://localhost:6000
 
 H2 Console: http://localhost:8082/h2-console
 
