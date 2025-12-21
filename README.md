@@ -1,15 +1,5 @@
 🏫 University Management System - Microservices Architecture
-<div align="center">
-https://img.shields.io/badge/Architecture-Microservices-blue
-https://img.shields.io/badge/Backend-Spring%2520Boot-green
-https://img.shields.io/badge/Auth-Keycloak-orange
-https://img.shields.io/badge/Container-Docker-blue
-https://img.shields.io/badge/Database-MySQL-lightgrey
-https://img.shields.io/badge/Java-17-red
-
 A modern, scalable university management system built with microservices architecture
-
-</div>
 📊 System Architecture
 <img width="1732" height="869" alt="image" src="https://github.com/user-attachments/assets/362e3591-239c-42e6-b285-f6693e771911" />
 🚀 Features
