@@ -1,5 +1,6 @@
 🏫 University Management System - Microservices Architecture
-A modern, scalable university management system built with microservices architecture
+A modern, scalable university management system built with microservices architecture.
+
 📊 System Architecture
 <img width="1732" height="869" alt="image" src="https://github.com/user-attachments/assets/362e3591-239c-42e6-b285-f6693e771911" />
 🚀 Features
@@ -42,11 +43,11 @@ Containerized with Docker
 🚀 Quick Start
 Prerequisites
 Java 17+
-
 Maven 3.8+
-
 Docker & Docker Compose && PODMAN
 Kubernetees
+
+
 Installation Steps
 1-Clone the Repository
 git clone https://github.com/yourusername/university-management-system.git
@@ -70,25 +71,13 @@ H2 Console: http://localhost:8082/h2-console
 📚 API Documentation
 Sample Endpoints
 Student Service
-GET    /api/students           # List all students
-POST   /api/students           # Create student
-GET    /api/students/{id}      # Get student by ID
-PUT    /api/students/{id}      # Update student
-DELETE /api/students/{id}      # Delete student
+<img width="445" height="128" alt="image" src="https://github.com/user-attachments/assets/9500b02f-3570-456c-83da-b9b8c0a13612" />
 
 Course Service
-GET    /api/courses            # List all courses
-POST   /api/courses            # Create course (Admin/Teacher)
-GET    /api/courses/{id}       # Get course details
-PUT    /api/courses/{id}       # Update course (Admin/Teacher)
-DELETE /api/courses/{id}       # Delete course (Admin)
+<img width="536" height="128" alt="image" src="https://github.com/user-attachments/assets/7dcc0497-10ef-4161-a879-9b2944f12aa6" />
 
 Schedule Service
-GET    /api/schedules          # View all schedules
-POST   /api/schedules          # Create schedule (Admin/Teacher)
-GET    /api/schedules/{id}     # Get schedule details
-GET    /api/schedules/room/{room}  # Get room schedule
-GET    /api/schedules/teacher/{teacherId} # Get teacher schedule
+<img width="544" height="125" alt="image" src="https://github.com/user-attachments/assets/c13f0dec-877c-4b30-9cac-9605b90b6689" />
 
 📈 Monitoring & Observability
 Eureka Dashboard: Service health and instances
@@ -105,7 +94,9 @@ Externalized Configuration: Using Spring Cloud Config
 Profile-based: dev, test, prod environments
 
 Secret Management: Encrypted properties for sensitive data
+
 📊 Performance Metrics
+
 <img width="690" height="217" alt="image" src="https://github.com/user-attachments/assets/7bb1bd77-ac66-49b4-a49f-c1bffcac958a" />
 
 🔐 Security Features
