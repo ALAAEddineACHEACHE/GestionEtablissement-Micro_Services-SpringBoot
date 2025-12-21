@@ -38,10 +38,15 @@ Containerized with Docker
 📁 Project Structure
 
 <img width="589" height="380" alt="image" src="https://github.com/user-attachments/assets/5c2d5ae2-9f90-4e67-b46c-6d8229aa92a4" />
+
 🛠️ Technology Stack
+
 <img width="817" height="551" alt="image" src="https://github.com/user-attachments/assets/de26434c-2c7e-44fe-af86-8fe38fafc2e2" />
+
 📊 Service Port Mapping
+
 <img width="685" height="547" alt="image" src="https://github.com/user-attachments/assets/c8c3c4b3-b76f-403a-9084-f2d87eab228b" />
+
 🚀 Quick Start
 Prerequisites
 Java 17+
@@ -71,8 +76,8 @@ H2 Console: http://localhost:8082/h2-console
 <img width="755" height="286" alt="image" src="https://github.com/user-attachments/assets/ed7faafc-6602-4132-bfbf-7fd6c1dec6db" />
 
 📚 API Documentation Sample Endpoints
-
 Student Service
+
 <img width="445" height="128" alt="image" src="https://github.com/user-attachments/assets/9500b02f-3570-456c-83da-b9b8c0a13612" />
 
 Course Service
