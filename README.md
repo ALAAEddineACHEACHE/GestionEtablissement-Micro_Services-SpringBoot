@@ -34,7 +34,9 @@ Distributed Tracing capabilities
 
 Containerized with Docker
 
+
 📁 Project Structure
+
 <img width="589" height="380" alt="image" src="https://github.com/user-attachments/assets/5c2d5ae2-9f90-4e67-b46c-6d8229aa92a4" />
 🛠️ Technology Stack
 <img width="817" height="551" alt="image" src="https://github.com/user-attachments/assets/de26434c-2c7e-44fe-af86-8fe38fafc2e2" />
@@ -68,15 +70,17 @@ H2 Console: http://localhost:8082/h2-console
 
 <img width="755" height="286" alt="image" src="https://github.com/user-attachments/assets/ed7faafc-6602-4132-bfbf-7fd6c1dec6db" />
 
-📚 API Documentation
-Sample Endpoints
+📚 API Documentation Sample Endpoints
+
 Student Service
 <img width="445" height="128" alt="image" src="https://github.com/user-attachments/assets/9500b02f-3570-456c-83da-b9b8c0a13612" />
 
 Course Service
+
 <img width="536" height="128" alt="image" src="https://github.com/user-attachments/assets/7dcc0497-10ef-4161-a879-9b2944f12aa6" />
 
 Schedule Service
+
 <img width="544" height="125" alt="image" src="https://github.com/user-attachments/assets/c13f0dec-877c-4b30-9cac-9605b90b6689" />
 
 📈 Monitoring & Observability
