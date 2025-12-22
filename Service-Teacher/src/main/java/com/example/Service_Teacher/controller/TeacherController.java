@@ -1,5 +1,7 @@
 package com.example.Service_Teacher.controller;
 
+import com.example.Service_Teacher.dto.TeacherExamDTO;
+import com.example.Service_Teacher.dto.TeacherScheduleDTO;
 import com.example.Service_Teacher.models.Teacher;
 import com.example.Service_Teacher.service.TeacherService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -46,5 +48,32 @@ public class TeacherController {
     @PreAuthorize("hasRole('ADMIN')")
     public void delete(@PathVariable Long id) {
         service.delete(id);
+    }
+
+    // ======================
+    // PROFIL
+    // ======================
+    @GetMapping("/{id}/profile")
+    @PreAuthorize("hasRole('TEACHER') or hasRole('ADMIN')")
+    public Teacher getProfile(@PathVariable Long id) {
+        return service.getProfile(id);
+    }
+
+    // ======================
+    // CRENEAUX
+    // ======================
+    @GetMapping("/{id}/schedules")
+    @PreAuthorize("hasRole('TEACHER') or hasRole('ADMIN')")
+    public List<TeacherScheduleDTO> getSchedules(@PathVariable Long id) {
+        return service.getSchedules(id);
+    }
+
+    // ======================
+    // EXAMENS
+    // ======================
+    @GetMapping("/{id}/exams")
+    @PreAuthorize("hasRole('TEACHER') or hasRole('ADMIN')")
+    public List<TeacherExamDTO> getExams(@PathVariable Long id) {
+        return service.getExams(id);
     }
 }
