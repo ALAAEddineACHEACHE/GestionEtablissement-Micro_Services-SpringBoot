@@ -67,7 +67,7 @@ public class Routes {
     @Bean
     public RouterFunction<ServerResponse> examServiceRouter() {
         return GatewayRouterFunctions.route("exam-service")
-                .route(RequestPredicates.path("/api/exams/**"),
+                .route(RequestPredicates.path("/exams/**"),
                         HandlerFunctions.http("http://localhost:6006"))
 //                .filter(CircuitBreakerFilterFunctions.circuitBreaker(
 //                        "examServiceCB",
@@ -79,7 +79,7 @@ public class Routes {
     @Bean
     public RouterFunction<ServerResponse> adminServiceRouter() {
         return GatewayRouterFunctions.route("admin-service")
-                .route(RequestPredicates.path("/api/admin/**"),
+                .route(RequestPredicates.path("/admin/**"),
                         HandlerFunctions.http("http://localhost:6007"))
 //                .filter(CircuitBreakerFilterFunctions.circuitBreaker(
 //                        "adminServiceCB",

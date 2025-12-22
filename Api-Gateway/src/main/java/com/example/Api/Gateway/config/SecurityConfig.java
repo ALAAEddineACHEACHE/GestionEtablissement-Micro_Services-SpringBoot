@@ -69,7 +69,6 @@ public class SecurityConfig {
                     .collect(Collectors.toSet());
         }
     }
-
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
