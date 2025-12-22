@@ -33,6 +33,10 @@ public class StudentService {
 
         return repository.save(existing);
     }
+    public Student getById(String id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student not found with id: " + id));
+    }
 
     public void delete(String id) {
         repository.deleteById(id);

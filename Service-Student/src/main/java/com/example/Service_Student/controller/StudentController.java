@@ -25,6 +25,11 @@ public class StudentController {
     public List<Student> all() {
         return service.getAll();
     }
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    public Student getById(@PathVariable String id) {
+        return service.getById(id);
+    }
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
