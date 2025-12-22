@@ -6,6 +6,8 @@ import com.example.Service_Exam.dto.*;
 import com.example.Service_Exam.model.Exam;
 import com.example.Service_Exam.model.ExamResult;
 import com.example.Service_Exam.repo.ExamRepository;
+import lombok.extern.slf4j.Slf4j;
+import lombok.extern.slf4j.XSlf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.example.Service_Exam.dto.StudentDTO;
@@ -13,7 +15,7 @@ import com.example.Service_Exam.dto.StudentDTO;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Slf4j
 @Service
 @Transactional
 public class ExamService {
@@ -142,18 +144,32 @@ public class ExamService {
                     ExamResultResponse response = new ExamResultResponse();
                     response.setStudentId(result.getStudentId());
 
-                    // Récupérer le nom de l'étudiant via Feign
-                    StudentDTO student = studentClient.getStudentById(result.getStudentId());
-                    response.setStudentName(student.getFullName());
+                    try {
+                        StudentDTO student = studentClient.getStudentById(result.getStudentId());
+                        response.setStudentName(student.getFullName());
+                    } catch (Exception ex) {
+                        // 🔴 LOG IMPORTANT
+                        log.warn(
+                                "Impossible de récupérer l'étudiant avec id={} pour examId={}",
+                                result.getStudentId(),
+                                examId,
+                                ex
+                        );
+
+                        // Fallback fonctionnel
+                        response.setStudentName("STUDENT_NOT_FOUND");
+                    }
 
                     response.setScore(result.getScore());
                     response.setGrade(result.getGrade());
                     response.setPassed(result.getPassed());
                     response.setRemarks(result.getRemarks());
+
                     return response;
                 })
                 .collect(Collectors.toList());
     }
+
 
     // DELETE
     public void delete(Long id) {

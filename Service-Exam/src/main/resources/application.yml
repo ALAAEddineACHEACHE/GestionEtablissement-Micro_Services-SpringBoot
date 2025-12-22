@@ -34,6 +34,13 @@ spring:
         jwt:
           issuer-uri: http://localhost:8181/realms/university_realm
           jwk-set-uri: http://localhost:8181/realms/university_realm/protocol/openid-connect/certs
+resilience4j:
+  circuitbreaker:
+    instances:
+      studentService:
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        sliding-window-size: 5
 
 eureka:
   client:

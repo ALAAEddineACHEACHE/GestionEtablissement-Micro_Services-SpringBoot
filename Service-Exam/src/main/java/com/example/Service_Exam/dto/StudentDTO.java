@@ -5,10 +5,11 @@ import lombok.Data;
 @Data
 public class StudentDTO {
     private String id;
-    private String firstName;
-    private String lastName;
+    private String name;
+    private String email;
+    private String level;
 
     public String getFullName() {
-        return firstName + " " + lastName;
+        return name;
     }
 }
