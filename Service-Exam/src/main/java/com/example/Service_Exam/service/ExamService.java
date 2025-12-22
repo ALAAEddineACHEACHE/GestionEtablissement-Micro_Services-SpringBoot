@@ -30,6 +30,10 @@ public class ExamService {
         this.studentClient = studentClient;
     }
 
+    public List<StudentExamResultDTO> getResultsByStudent(String studentId) {
+        return repository.findResultsByStudentId(studentId);
+    }
+
     // CREATE
     public ExamResponse create(ExamRequest request) {
         Exam exam = new Exam();

@@ -1,9 +1,6 @@
 package com.example.Service_Exam.controller;
 
-import com.example.Service_Exam.dto.ExamRequest;
-import com.example.Service_Exam.dto.ExamResponse;
-import com.example.Service_Exam.dto.ExamResultRequest;
-import com.example.Service_Exam.dto.ExamResultResponse;
+import com.example.Service_Exam.dto.*;
 import com.example.Service_Exam.service.ExamService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -102,7 +99,7 @@ public class ExamController {
 
     // GET exam results
     @GetMapping("/{id}/results")
-    @PreAuthorize("hasAnyRole('TEACHER', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('TEACHER','ADMIN')")
     public ResponseEntity<List<ExamResultResponse>> getExamResults(@PathVariable Long id) {
         List<ExamResultResponse> results = examService.getResults(id);
         return ResponseEntity.ok(results);
@@ -115,7 +112,11 @@ public class ExamController {
         examService.delete(id);
         return ResponseEntity.noContent().build();
     }
-
+    //Get Student Marks
+    @GetMapping("/students/{studentId}/results")
+    public List<StudentExamResultDTO> resultsByStudent(@PathVariable String studentId) {
+        return examService.getResultsByStudent(studentId);
+    }
     // Exception handler
     @ExceptionHandler({RuntimeException.class})
     public ResponseEntity<String> handleException(Exception e) {
