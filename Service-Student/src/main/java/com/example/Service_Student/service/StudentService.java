@@ -1,5 +1,6 @@
 package com.example.Service_Student.service;
 
+import com.example.Service_Student.dto.StudentExamResultDTO;
 import com.example.Service_Student.models.Student;
 import com.example.Service_Student.repo.StudentRepository;
 import org.springframework.stereotype.Service;
@@ -33,10 +34,13 @@ public class StudentService {
 
         return repository.save(existing);
     }
+
+    // profil
     public Student getById(String id) {
         return repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Student not found with id: " + id));
     }
+
 
     public void delete(String id) {
         repository.deleteById(id);

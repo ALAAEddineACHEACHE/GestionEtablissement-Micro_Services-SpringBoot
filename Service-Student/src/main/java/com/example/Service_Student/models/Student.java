@@ -11,6 +11,7 @@ public class Student {
     @Id
     private String id;
     private String name;
+    private String keycloakId;
     private String email;
     private String level;
 
