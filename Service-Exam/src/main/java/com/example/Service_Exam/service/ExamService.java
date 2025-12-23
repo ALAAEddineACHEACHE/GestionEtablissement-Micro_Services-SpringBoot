@@ -30,9 +30,6 @@ public class ExamService {
         this.studentClient = studentClient;
     }
 
-    public List<StudentExamResultDTO> getResultsByStudent(String studentId) {
-        return repository.findResultsByStudentId(studentId);
-    }
     public List<TeacherExamDTO> findExamsByTeacher(Long teacherId) {
         return repository.findByTeacherId(teacherId)
                 .stream()
@@ -207,7 +204,54 @@ public class ExamService {
         if (percentage >= 60) return "D";
         return "F";
     }
+    // GET STUDENT RESULTS (tous les résultats d'un étudiant)
+    public List<StudentExamResultDTO> getResultsByStudent(String studentId) {
+        // Vérifier que l'ID est valide
+        if (studentId == null || studentId.trim().isEmpty()) {
+            throw new IllegalArgumentException("Student ID is required");
+        }
 
+        // Rechercher les résultats depuis le repository
+        List<StudentExamResultDTO> results = repository.findResultsByStudentId(studentId);
+
+        // Pour chaque résultat, récupérer les infos manquantes de l'examen
+        results.forEach(dto -> {
+            // Récupérer l'examen complet pour avoir maxScore, examDateTime, etc.
+            Exam exam = repository.findById(dto.getExamId())
+                    .orElse(null);
+
+            if (exam != null) {
+                dto.setMaxScore(exam.getMaxScore());
+                dto.setExamDate(exam.getExamDateTime());
+                dto.setExamCode(exam.getCode());
+                dto.setStudentId(studentId);
+
+                // Calculer le pourcentage
+                dto.calculatePercentage();
+
+                // Générer les remarques
+                dto.setRemarks(generateRemarks(dto.getPercentage()));
+
+                // Recalculer la grade si nécessaire
+                if (dto.getGrade() == null || dto.getGrade().isEmpty()) {
+                    dto.calculateGradeFromPercentage();
+                }
+            }
+        });
+
+        return results;
+    }
+
+
+    private String generateRemarks(Double percentage) {
+        if (percentage == null) return "No score";
+        if (percentage >= 90) return "Excellent";
+        if (percentage >= 80) return "Very Good";
+        if (percentage >= 70) return "Good";
+        if (percentage >= 60) return "Satisfactory";
+        if (percentage >= 50) return "Pass";
+        return "Needs Improvement";
+    }
     private ExamResponse convertToResponse(Exam exam) {
         ExamResponse response = new ExamResponse();
         response.setId(exam.getId());

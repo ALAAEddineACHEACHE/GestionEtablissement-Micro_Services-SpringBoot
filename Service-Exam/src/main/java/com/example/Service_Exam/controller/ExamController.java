@@ -119,15 +119,19 @@ public class ExamController {
         examService.delete(id);
         return ResponseEntity.noContent().build();
     }
-    //Get Student Marks
-    @GetMapping("/students/{studentId}/results")
-    public List<StudentExamResultDTO> resultsByStudent(@PathVariable String studentId) {
-        return examService.getResultsByStudent(studentId);
-    }
+
     @GetMapping("/teacher/{teacherId}")
     @PreAuthorize("hasRole('TEACHER') or hasRole('ADMIN')")
     public List<TeacherExamDTO> getExamsByTeacher(@PathVariable Long teacherId) {
         return examService.findExamsByTeacher(teacherId);
+    }
+
+    // Endpoint pour récupérer les résultats d'un étudiant
+    @GetMapping("/students/{studentId}/results")
+    @PreAuthorize("hasAnyRole('STUDENT', 'TEACHER', 'ADMIN')")
+    public ResponseEntity<List<StudentExamResultDTO>> getResultsByStudent(@PathVariable String studentId) {
+        List<StudentExamResultDTO> results = examService.getResultsByStudent(studentId);
+        return ResponseEntity.ok(results);
     }
 
     // Exception handler
