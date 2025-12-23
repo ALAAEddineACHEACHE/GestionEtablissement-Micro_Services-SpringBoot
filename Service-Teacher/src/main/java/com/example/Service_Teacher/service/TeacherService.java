@@ -9,6 +9,7 @@ import com.example.Service_Teacher.repo.TeacherRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,6 +69,12 @@ public class TeacherService {
     }
 
     public List<TeacherExamDTO> getExams(Long teacherId) {
-        return examClient.getExamsByTeacher(String.valueOf(teacherId));
+        List<TeacherExamDTO> exams = examClient.getExamsByTeacher(String.valueOf(teacherId));
+        return exams != null ? exams : Collections.emptyList();
     }
+    public Teacher findByName(String name) {
+        return (Teacher) repository.findByName(name)
+                .orElseThrow(() -> new RuntimeException("Teacher not found"));
+    }
+
 }
