@@ -2,6 +2,7 @@ package com.example.Service_Schedule.controller;
 
 import com.example.Service_Schedule.dto.ScheduleRequest;
 import com.example.Service_Schedule.dto.ScheduleResponse;
+import com.example.Service_Schedule.dto.TeacherScheduleDTO;
 import com.example.Service_Schedule.service.ScheduleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,16 +24,16 @@ public class ScheduleController {
     // GET all schedules
     @GetMapping
     @PreAuthorize("hasAnyRole('TEACHER', 'STUDENT', 'ADMIN')")
-    public ResponseEntity<List<ScheduleResponse>> getAllSchedules() {
-        List<ScheduleResponse> schedules = scheduleService.findAll();
+    public ResponseEntity<List<TeacherScheduleDTO>> getAllSchedules() {
+        List<TeacherScheduleDTO> schedules = scheduleService.findAll();
         return ResponseEntity.ok(schedules);
     }
 
     // GET schedule by ID
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('TEACHER', 'STUDENT', 'ADMIN')")
-    public ResponseEntity<ScheduleResponse> getScheduleById(@PathVariable Long id) {
-        ScheduleResponse schedule = scheduleService.findById(id);
+    public ResponseEntity<TeacherScheduleDTO> getScheduleById(@PathVariable Long id) {
+        TeacherScheduleDTO schedule = scheduleService.findById(id);
         return ResponseEntity.ok(schedule);
     }
 
@@ -47,8 +48,8 @@ public class ScheduleController {
     // GET schedules by teacher
     @GetMapping("/teacher/{teacherId}")
     @PreAuthorize("hasAnyRole('TEACHER', 'ADMIN')")
-    public ResponseEntity<List<ScheduleResponse>> getSchedulesByTeacher(@PathVariable String teacherId) {
-        List<ScheduleResponse> schedules = scheduleService.findByTeacherId(teacherId);
+    public ResponseEntity<List<TeacherScheduleDTO>> getSchedulesByTeacher(@PathVariable String teacherId) {
+        List<TeacherScheduleDTO> schedules = scheduleService.findByTeacherId(teacherId);
         return ResponseEntity.ok(schedules);
     }
 
@@ -63,10 +64,10 @@ public class ScheduleController {
     // PUT update schedule
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('TEACHER', 'ADMIN')")
-    public ResponseEntity<ScheduleResponse> updateSchedule(
+    public ResponseEntity<TeacherScheduleDTO> updateSchedule(
             @PathVariable Long id,
             @RequestBody ScheduleRequest request) {
-        ScheduleResponse updated = scheduleService.update(id, request);
+        TeacherScheduleDTO updated = scheduleService.update(id, request);
         return ResponseEntity.ok(updated);
     }
 

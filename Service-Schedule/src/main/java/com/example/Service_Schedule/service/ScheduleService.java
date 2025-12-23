@@ -2,10 +2,7 @@ package com.example.Service_Schedule.service;
 
 import com.example.Service_Schedule.controller.CourseClient;
 import com.example.Service_Schedule.controller.TeacherClient;
-import com.example.Service_Schedule.dto.CourseDTO;
-import com.example.Service_Schedule.dto.ScheduleRequest;
-import com.example.Service_Schedule.dto.ScheduleResponse;
-import com.example.Service_Schedule.dto.TeacherDTO;
+import com.example.Service_Schedule.dto.*;
 import com.example.Service_Schedule.models.Schedule;
 import com.example.Service_Schedule.repo.ScheduleRepository;
 import org.springframework.stereotype.Service;
@@ -62,20 +59,55 @@ public class ScheduleService {
 
         return convertToResponse(repository.save(schedule));
     }
+    //Mapping CORRECT vers TeacherScheduleDTO
+    private TeacherScheduleDTO mapToTeacherScheduleDTO(Schedule schedule) {
+
+        TeacherScheduleDTO dto = new TeacherScheduleDTO();
+        dto.setScheduleId(schedule.getId());
+        dto.setCourseId(schedule.getCourseId());
+        dto.setRoom(schedule.getRoom());
+        dto.setStartTime(schedule.getStartTime());
+        dto.setEndTime(schedule.getEndTime());
+
+        return dto;
+    }
+    //enrichissement de course
+    private void enrichWithCourseName(List<TeacherScheduleDTO> schedules) {
+        for (TeacherScheduleDTO dto : schedules) {
+            try {
+                CourseDTO course = courseClient.getCourseById(dto.getCourseId());
+                if (course != null) {
+                    dto.setCourseName(course.getTitle());
+                } else {
+                    dto.setCourseName("Unknown Course");
+                }
+            } catch (Exception e) {
+                dto.setCourseName("Unknown Course");
+            }
+        }
+    }
 
     // ===================== READ =====================
-    public List<ScheduleResponse> findAll() {
-        return repository.findAll()
-                .stream()
-                .map(this::convertToResponse)
-                .collect(Collectors.toList());
-    }
 
-    public ScheduleResponse findById(Long id) {
+
+    public TeacherScheduleDTO findById(Long id) {
         Schedule schedule = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Schedule not found"));
-        return convertToResponse(schedule);
+        return mapToTeacherScheduleDTO(schedule);
     }
+
+    public List<TeacherScheduleDTO> findByTeacherId(String teacherId) {
+
+        List<TeacherScheduleDTO> schedules = repository.findByTeacherId(teacherId)
+                .stream()
+                .map(this::mapToTeacherScheduleDTO)
+                .collect(Collectors.toList());
+
+        enrichWithCourseName(schedules);
+
+        return schedules;
+    }
+
 
     public List<ScheduleResponse> findByCourseId(Long courseId) {
         return repository.findByCourseId(courseId)
@@ -83,24 +115,25 @@ public class ScheduleService {
                 .map(this::convertToResponse)
                 .collect(Collectors.toList());
     }
+    public List<TeacherScheduleDTO> findAll() {
 
-    public List<ScheduleResponse> findByTeacherId(String teacherId) {
-        return repository.findByTeacherId(teacherId)
+        List<TeacherScheduleDTO> schedules = repository.findAll()
                 .stream()
-                .map(this::convertToResponse)
+                .map(this::mapToTeacherScheduleDTO)
                 .collect(Collectors.toList());
+
+        enrichWithCourseName(schedules);
+
+        return schedules;
     }
 
+
+
     // ===================== UPDATE =====================
-    public ScheduleResponse update(Long id, ScheduleRequest request) {
+    public TeacherScheduleDTO update(Long id, ScheduleRequest request) {
 
         Schedule schedule = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Schedule not found"));
-
-        CourseDTO course = courseClient.getCourseById(request.getCourseId());
-        if (course == null) {
-            throw new IllegalArgumentException("Course not found");
-        }
 
         if (isRoomOccupied(
                 request.getRoom(),
@@ -118,8 +151,9 @@ public class ScheduleService {
         schedule.setEndTime(request.getEndTime());
         schedule.setDescription(request.getDescription());
 
-        return convertToResponse(repository.save(schedule));
+        return mapToTeacherScheduleDTO(repository.save(schedule));
     }
+
 
     // ===================== DELETE =====================
     public void delete(Long id) {
