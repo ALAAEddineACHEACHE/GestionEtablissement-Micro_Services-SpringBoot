@@ -48,6 +48,8 @@ public class Exam {
 
     @Column
     private Double maxScore;  // Note maximale (ex: 20)
+    @Column(name = "teacher_id")
+    private Long teacherId;
 
     // Pour les résultats
     @ElementCollection

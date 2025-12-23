@@ -15,4 +15,6 @@ public class ExamRequest {
     private String examType;
     private String description;
     private Double maxScore;
+    private Long teacherId; // ← Ajoutez ce champ
+
 }

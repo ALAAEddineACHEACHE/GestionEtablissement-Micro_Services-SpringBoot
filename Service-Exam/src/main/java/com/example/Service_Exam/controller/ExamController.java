@@ -5,9 +5,13 @@ import com.example.Service_Exam.service.ExamService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.attribute.UserPrincipal;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/exams")
@@ -61,11 +65,14 @@ public class ExamController {
 
     // POST create exam
     @PostMapping
-    @PreAuthorize("hasAnyRole('TEACHER', 'ADMIN')")
+    @PreAuthorize("hasRole('TEACHER') or hasRole('ADMIN')")
     public ResponseEntity<ExamResponse> createExam(@RequestBody ExamRequest request) {
-        ExamResponse created = examService.create(request);
+        // Le teacherId est déjà dans la request
+        // Pas besoin de récupérer depuis l'authentication
+        ExamResponse created = examService.create(request, request.getTeacherId());
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
+
 
     // PUT update exam
     @PutMapping("/{id}")
@@ -117,6 +124,12 @@ public class ExamController {
     public List<StudentExamResultDTO> resultsByStudent(@PathVariable String studentId) {
         return examService.getResultsByStudent(studentId);
     }
+    @GetMapping("/teacher/{teacherId}")
+    @PreAuthorize("hasRole('TEACHER') or hasRole('ADMIN')")
+    public List<TeacherExamDTO> getExamsByTeacher(@PathVariable Long teacherId) {
+        return examService.findExamsByTeacher(teacherId);
+    }
+
     // Exception handler
     @ExceptionHandler({RuntimeException.class})
     public ResponseEntity<String> handleException(Exception e) {

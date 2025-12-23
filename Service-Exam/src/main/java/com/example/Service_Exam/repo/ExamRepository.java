@@ -27,4 +27,7 @@ public interface ExamRepository extends JpaRepository<Exam, Long> {
             "e.id, e.name, r.score, r.grade, r.passed) " +
             "FROM Exam e JOIN e.results r " +
             "WHERE r.studentId = :studentId")
-    List<StudentExamResultDTO> findResultsByStudentId(@Param("studentId") String studentId);}
+    List<StudentExamResultDTO> findResultsByStudentId(@Param("studentId") String studentId);
+    List<Exam> findByTeacherId(Long teacherId);
+
+}

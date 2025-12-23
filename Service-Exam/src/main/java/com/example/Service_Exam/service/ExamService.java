@@ -33,9 +33,21 @@ public class ExamService {
     public List<StudentExamResultDTO> getResultsByStudent(String studentId) {
         return repository.findResultsByStudentId(studentId);
     }
-
+    public List<TeacherExamDTO> findExamsByTeacher(Long teacherId) {
+        return repository.findByTeacherId(teacherId)
+                .stream()
+                .map(exam -> {
+                    TeacherExamDTO dto = new TeacherExamDTO();
+                    dto.setExamId(exam.getId());
+                    dto.setName(exam.getName());
+                    dto.setExamType(exam.getExamType());
+                    dto.setStatus(exam.getStatus());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+    }
     // CREATE
-    public ExamResponse create(ExamRequest request) {
+    public ExamResponse create(ExamRequest request, Long teacherId) {
         Exam exam = new Exam();
         exam.setName(request.getName());
         exam.setCode(request.getCode());
@@ -47,10 +59,12 @@ public class ExamService {
         exam.setDescription(request.getDescription());
         exam.setStatus("SCHEDULED");
         exam.setMaxScore(request.getMaxScore());
+        exam.setTeacherId(teacherId); // <-- IMPORTANT
 
         Exam saved = repository.save(exam);
         return convertToResponse(saved);
     }
+
 
     // READ ALL
     public List<ExamResponse> findAll() {
