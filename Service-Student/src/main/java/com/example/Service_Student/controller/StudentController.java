@@ -51,19 +51,41 @@ public class StudentController {
     public Student updateStudent(@PathVariable String id, @RequestBody Student student) {
         return service.update(id, student);
     }
-    @GetMapping("/my-results")
-    @PreAuthorize("hasRole('STUDENT')")
-    public List<StudentExamResultDTO> getMyResults(Authentication authentication) {
-        Jwt jwt = (Jwt) authentication.getPrincipal();
-        String email = jwt.getClaimAsString("email");
 
+    // Endpoint pour récupérer ses propres résultats
+    @GetMapping("/{studentId}/results")
+    public List<StudentExamResultDTO> getStudentResults(@PathVariable String studentId) {
         // Vérifier que l'étudiant existe
-        Student student = studentRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Student not found"));
+        if (!studentRepository.existsById(studentId)) {
+            throw new RuntimeException("Student not found with ID: " + studentId);
+        }
 
-        // ✅ Passer l'email directement au service Exam
-        return examClient.getStudentResultsByEmail(email);
+        // Appeler le service Exam
+        return examClient.getStudentResults(studentId);
     }
+
+    // Endpoint pour récupérer SON PROPRE ID (si nécessaire)
+    @GetMapping("/{email}/my-id")
+    public String getStudentIdByEmail(@PathVariable String email) {
+        return studentRepository.findByEmail(email)
+                .map(Student::getId)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+    }
+
+
+//    @GetMapping("/my-results")
+//    @PreAuthorize("hasRole('STUDENT')")
+//    public List<StudentExamResultDTO> getMyResults(Authentication authentication) {
+//        Jwt jwt = (Jwt) authentication.getPrincipal();
+//        String email = jwt.getClaimAsString("email");
+//
+//        // Vérifier que l'étudiant existe
+//        Student student = studentRepository.findByEmail(email)
+//                .orElseThrow(() -> new RuntimeException("Student not found"));
+//
+//        // ✅ Passer l'email directement au service Exam
+//        return examClient.getStudentResultsByEmail(email);
+//    }
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public void delete(@PathVariable String id) {

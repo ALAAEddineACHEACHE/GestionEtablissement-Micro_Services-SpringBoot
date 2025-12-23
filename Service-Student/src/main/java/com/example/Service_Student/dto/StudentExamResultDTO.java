@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class StudentExamResultDTO {
     private Long examId;
     private String examName;
-    private String courseCode;
+    private String examCode;
     private LocalDateTime examDate;
     private Double score;
     private Double maxScore;
@@ -18,23 +18,31 @@ public class StudentExamResultDTO {
     private String grade;
     private Boolean passed;
     private String remarks;
+    private String studentId; // Pour référence
 
-    // Constructeur pour JPQL (si nécessaire)
-    public StudentExamResultDTO(Long examId, String examName, Double score, String grade, Boolean passed) {
+    // Constructeur pour JPQL
+    public StudentExamResultDTO(Long examId, String examName, String examCode,
+                                LocalDateTime examDate, Double score, Double maxScore,
+                                String grade, Boolean passed) {
         this.examId = examId;
         this.examName = examName;
+        this.examCode = examCode;
+        this.examDate = examDate;
         this.score = score;
+        this.maxScore = maxScore;
         this.grade = grade;
         this.passed = passed;
-        this.percentage = 0.0; // À calculer après
+        this.percentage = calculatePercentageValue(score, maxScore);
     }
 
-    // Méthode pour calculer le pourcentage
     public void calculatePercentage() {
-        if (maxScore != null && maxScore > 0 && score != null) {
-            this.percentage = (score / maxScore) * 100;
-        } else {
-            this.percentage = 0.0;
+        this.percentage = calculatePercentageValue(score, maxScore);
+    }
+
+    private Double calculatePercentageValue(Double score, Double maxScore) {
+        if (score != null && maxScore != null && maxScore > 0) {
+            return (score / maxScore) * 100;
         }
+        return 0.0;
     }
 }

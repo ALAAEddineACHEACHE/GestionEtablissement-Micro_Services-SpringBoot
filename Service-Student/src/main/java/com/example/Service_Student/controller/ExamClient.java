@@ -6,11 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
-@FeignClient(name = "SERVICE-EXAM", fallback = ExamClientFallback.class
-)
+@FeignClient(name = "SERVICE-EXAM")
 public interface ExamClient {
 
-    @GetMapping("/exams/student/email/{email}/results")
-    List<StudentExamResultDTO> getStudentResultsByEmail(@PathVariable String email);
-
+    @GetMapping("/exams/students/{studentId}/results")
+    List<StudentExamResultDTO> getStudentResults(@PathVariable String studentId);
 }
