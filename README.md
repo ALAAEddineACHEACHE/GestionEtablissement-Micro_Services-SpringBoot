@@ -3,8 +3,7 @@ A modern, scalable university management system built with microservices archite
 
 📊 System Architecture
 
-![Uploading deepseek_mermaid_20251225_71200e.png…]()
-
+<img width="13953" height="3584" alt="deepseek_mermaid_20251225_71200e" src="https://github.com/user-attachments/assets/63bed7bb-1a7c-4f44-bbeb-3a5292f18a88" />
 
 Scalabilité :
 
